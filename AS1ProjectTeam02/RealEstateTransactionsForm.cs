@@ -25,6 +25,11 @@ namespace AS1ProjectTeam02
             InitializeAllOtherFormControls();
 
             PopulateDataGridAll();
+            
+            ResetControlsToDefault();
+            
+            //event handler for reset button
+            buttonReset.Click += buttonReset_Click;
 
 
 
@@ -33,6 +38,9 @@ namespace AS1ProjectTeam02
         public void OpenTheXML()
         {
             OpenFileDialog openFileDialogXML = new OpenFileDialog();
+            
+            openFileDialogXML.InitialDirectory = Path.GetFullPath(Application.StartupPath + "\\..\\..");
+            
             StreamReader inputFile;
 
             if (openFileDialogXML.ShowDialog() == DialogResult.OK)
@@ -182,6 +190,44 @@ namespace AS1ProjectTeam02
             
 
 
+        }
+        
+        public void ResetControlsToDefault()
+        {
+            //unregister listboxes
+            listBoxCities.SelectedIndexChanged -= listBoxCities_SelectedIndexChanged;
+            listBoxBedrooms.SelectedIndexChanged -= listBoxBedrooms_SelectedIndexChanged;
+            listBoxBathrooms.SelectedIndexChanged -= listBoxBathrooms_SelectedIndexChanged;
+            listBoxTypes.SelectedIndexChanged -= listBoxTypes_SelectedIndexChanged;
+
+            //clear textboxes
+            textBoxMinPrice.Clear();
+            textBoxMaxPrice.Clear();
+            textBoxMinSurfaceArea.Clear();
+            textBoxMaxSurfaceArea.Clear();
+
+            //uncheck checkboxes
+            checkBoxPrice.Checked = false;
+            checkBoxSurfaceArea.Checked = false;
+
+            //selected all items in listboxes
+            for (int i = 0; i < listBoxCities.Items.Count; i++)
+                listBoxCities.SetSelected(i, true);
+
+            for (int i = 0; i < listBoxBedrooms.Items.Count; i++)
+                listBoxBedrooms.SetSelected(i, true);
+
+            for (int i = 0; i < listBoxBathrooms.Items.Count; i++)
+                listBoxBathrooms.SetSelected(i, true);
+
+            for (int i = 0; i < listBoxHouseType.Items.Count; i++)
+                listBoxTypes.SetSelected(i, true);
+
+            //register listboxes
+            listBoxCities.SelectedIndexChanged += listBoxCities_SelectedIndexChanged;
+            listBoxBedrooms.SelectedIndexChanged += listBoxBedrooms_SelectedIndexChanged;
+            listBoxBathrooms.SelectedIndexChanged += listBoxBathrooms_SelectedIndexChanged;
+            listBoxTypes.SelectedIndexChanged += listBoxTypes_SelectedIndexChanged;
         }
 
         private void RealEstateTransactionsForm_Load(object sender, EventArgs e)
